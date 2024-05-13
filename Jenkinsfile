@@ -22,9 +22,12 @@ pipeline {
 
         stage('Install Package Dependencies') {
             steps {
-                sh 'cd ./frontend-app/'
-                sh 'pwd'
-                sh 'npm install'
+                dir('frontend-app'){ 
+                    sh 'npm install'
+                }
+                // sh 'cd ./frontend-app/'
+                // sh 'pwd'
+                
             }
         }
 
