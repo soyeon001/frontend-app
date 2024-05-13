@@ -40,7 +40,7 @@ pipeline {
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh '${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey="frontend-app" -Dsonar.projectName="frontend-app"'
+                    sh '${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.projectName=frontend-app'
                 }
             }
         }
