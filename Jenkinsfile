@@ -47,7 +47,9 @@ pipeline {
 
         stage('Build React Application') {
             steps {
+                dir ('frontend-app') {
                 sh 'npm run build'
+                }
             }
         }
 
