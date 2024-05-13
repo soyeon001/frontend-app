@@ -55,7 +55,9 @@ pipeline {
 
         stage('Deploy to S3') {
             steps {
-                sh 'aws s3 sync build/ ${S3_BUCKET} --delete'
+                dir('frontend-app') {
+                    sh 'aws s3 sync build/ ${S3_BUCKET} --delete'   
+                }
             }
         }
     }
