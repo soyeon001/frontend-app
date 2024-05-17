@@ -4,7 +4,9 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { Amplify } from 'aws-amplify';
 import { fetchUserAttributes } from '@aws-amplify/auth';
 import { useState, useEffect } from 'react';
+import "@aws-amplify/ui-react/styles.css";
 
+//amplify  설정 구성 (aws-exports.js)
 Amplify.configure(config);
 
 function App() {
@@ -24,7 +26,6 @@ function App() {
     getUserAttributes();
   }, []);
 
-  }
   return (
     <Authenticator>
       {({ signOut, user }) => {
@@ -40,6 +41,6 @@ function App() {
       }}
     </Authenticator>
   );
-
+} 
 
 export default App;
