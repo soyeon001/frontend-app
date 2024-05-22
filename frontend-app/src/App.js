@@ -1,46 +1,111 @@
-import config from "./aws-exports"
-import './App.css';
-import { Authenticator } from "@aws-amplify/ui-react";
-import { Amplify } from 'aws-amplify';
-import { fetchUserAttributes } from '@aws-amplify/auth';
-import { useState, useEffect } from 'react';
+import config from "./aws-exports";
+import { Amplify } from "aws-amplify";
+import {
+  View,
+  Flex,
+  Heading,
+  SearchField,
+  Text,
+  Divider,
+  Button,
+  Authenticator,
+  Menu,
+  MenuItem,
+  MenuButton,
+} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import { Route, Routes } from "react-router-dom";
+// 라우팅할 페이지들
+import Home from "./components/Home";
+import Posts from "./components/Posts";
+import About from "./components/About";
+import Test from "./components/Test";
+import CreatePost from "./components/CreatePost";
+import PostDetail from "./components/PostDetail";
 
-//amplify  설정 구성 (aws-exports.js)
+// Amplify 설정 구성 (aws-exports.js)
 Amplify.configure(config);
 
 function App() {
-  //useState 선언하기 (react에서의 변수 선언)
-  /// userAttributes 값, userAttributes를 수정할 수 있는 setUserAttributes
-  const [userAttributes, setUserAttributes] = useState({ name: ""});
-  //useEffect로 사용자 속성을 useState 에 저장
-  useEffect(()=> {
-    const getUserAttributes = async () => {
-      try {
-        const attributes = await fetchUserAttributes(); //fetchUserAttributes : 현재 로그인된 사용자의 속성을 가져옴
-        setUserAttributes(attributes);
-      } catch (e) { //에러 처리 
-        console.log(e);
-      }
-    };
-    getUserAttributes();
-  }, []);
-
   return (
     <Authenticator>
       {({ signOut, user }) => {
-        return(
-          <div className="App">
-            <header className="App-header">
-              {/* 사이트접속 사용자 이름 출력 */}
-              <h1> Hello {userAttributes.name}</h1>
-              <button onClick={signOut}> Sign Out </button>
-            </header>
-          </div>  
-        )
+        return (
+          <View padding="10px">
+            <Flex justifyContent="center">
+              <Heading level={1} textAlign="center">
+                <Text fontWeight={500}>🌹 sonaBoard 🌹</Text>
+              </Heading>
+            </Flex>
+            <Flex
+              padding="20px"
+              direction="row"
+              justifyContent="space-around"
+              alignItems="flex-end"
+            >
+              <Flex>
+                <Button
+                  variation="link"
+                  loadingText=""
+                  onClick={() => (window.location.href = "/")}
+                >
+                  Home
+                </Button>
+                <Button
+                  variation="link"
+                  loadingText=""
+                  onClick={() => (window.location.href = "/posts")}
+                >
+                  Posts
+                </Button>
+                <Menu
+                  trigger={
+                    <MenuButton variation="link" loadingText="">
+                      Test
+                    </MenuButton>
+                  }
+                >
+                  <MenuItem onClick={() => (window.location.href = "/test")}>
+                    Terraform
+                  </MenuItem>
+                  <MenuItem>Kubernetes</MenuItem>
+                  <MenuItem>Linux</MenuItem>
+                  <MenuItem>React</MenuItem>
+                </Menu>
+                <Button
+                  variation="link"
+                  loadingText=""
+                  onClick={() => (window.location.href = "/about")}
+                >
+                  About
+                </Button>
+              </Flex>
+              <Flex>
+                <SearchField />
+                <Button
+                  size="small"
+                  variation="primary"
+                  loadingText=""
+                  onClick={signOut}
+                >
+                  🔑 SignOut
+                </Button>
+              </Flex>
+            </Flex>
+            <Divider orientation="horizontal" />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/posts" element={<Posts />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/posts/:id" element={<PostDetail />} />
+            </Routes>
+          </View>
+        );
       }}
     </Authenticator>
   );
-} 
+}
 
 export default App;
