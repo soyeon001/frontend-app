@@ -9,10 +9,10 @@ const awsmobile = {
     oauth: {
       domain: "homeow.auth.ap-northeast-2.amazoncognito.com",
       scope: ["email", "openid", "profile", "aws.cognito.signin.user.admin"], // Google 로그인에 필요한 스코프, "aws.cognito.signin.user.admin"
-      // redirectSignIn: "https://www.homeow.site",
-      // redirectSignOut: "https://www.homeow.site",
-      redirectSignIn: "http://localhost:3000",
-      redirectSignOut: "http://localhost:3000",
+      redirectSignIn: "https://www.homeow.site",
+      redirectSignOut: "https://www.homeow.site",
+      // redirectSignIn: "http://localhost:3000",
+      // redirectSignOut: "http://localhost:3000",
       responseType: "code",
     },
     aws_cognito_username_attributes: ["EMAIL"],
